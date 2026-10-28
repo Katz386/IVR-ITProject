@@ -1,0 +1,8 @@
+.env
+**/.env
+.vs/
+.git/
+**/bin/
+**/obj/
+tests/
+data/storage/

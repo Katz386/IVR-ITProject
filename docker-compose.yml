@@ -1,0 +1,226 @@
+name: 28web
+services:
+  rabbitmq:
+    image: rabbitmq:4.3.6-alpine
+    hostname: rabbitmq
+    restart: unless-stopped
+    environment:
+    - RABBITMQ_DEFAULT_USER=${RABBITMQ_USER}
+    - RABBITMQ_DEFAULT_PASS=${RABBITMQ_PASS}
+    - RABBITMQ_SERVER_ADDITIONAL_ERL_ARGS=${RABBITMQ_ARGS}
+    volumes:
+    - rabbitmq_data:/var/lib/rabbitmq
+    healthcheck:
+      test:
+      - CMD-SHELL
+      - rabbitmq-diagnostics -q ping
+      interval: 30s
+      timeout: 30s
+      start_period: 60s
+      retries: 5
+  users-db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${AuthService_DB_POSTGRES_DB}
+      POSTGRES_USER: ${AuthService_DB_POSTGRES_USER}
+      POSTGRES_PASSWORD: ${AuthService_DB_POSTGRES_PASSWORD}
+    healthcheck:
+      test:
+      - CMD-SHELL
+      - pg_isready -U ${AuthService_DB_POSTGRES_USER} -d ${AuthService_DB_POSTGRES_DB}
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 60s
+    volumes:
+    - authService_data:/var/lib/postgresql/data
+  userService-db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${UserService_DB_POSTGRES_DB}
+      POSTGRES_USER: ${UserService_DB_POSTGRES_USER}
+      POSTGRES_PASSWORD: ${UserService_DB_POSTGRES_PASSWORD}
+    healthcheck:
+      test:
+      - CMD-SHELL
+      - pg_isready -U ${UserService_DB_POSTGRES_USER} -d ${UserService_DB_POSTGRES_DB}
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 60s
+    volumes:
+    - userService_data:/var/lib/postgresql/data
+  articles-db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${ArticlesService_DB_POSTGRES_DB}
+      POSTGRES_USER: ${ArticlesService_DB_POSTGRES_USER}
+      POSTGRES_PASSWORD: ${ArticlesService_DB_POSTGRES_PASSWORD}
+    healthcheck:
+      test:
+      - CMD-SHELL
+      - pg_isready -U ${ArticlesService_DB_POSTGRES_USER} -d ${ArticlesService_DB_POSTGRES_DB}
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 60s
+    volumes:
+    - articlesService_data:/var/lib/postgresql/data
+  tasks-db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${TasksService_DB_POSTGRES_DB}
+      POSTGRES_USER: ${TasksService_DB_POSTGRES_USER}
+      POSTGRES_PASSWORD: ${TasksService_DB_POSTGRES_PASSWORD}
+    healthcheck:
+      test:
+      - CMD-SHELL
+      - pg_isready -U ${TasksService_DB_POSTGRES_USER} -d ${TasksService_DB_POSTGRES_DB}
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 60s
+    volumes:
+    - tasksService_data:/var/lib/postgresql/data
+  files-db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${FileService_DB_POSTGRES_DB}
+      POSTGRES_USER: ${FileService_DB_POSTGRES_USER}
+      POSTGRES_PASSWORD: ${FileService_DB_POSTGRES_PASSWORD}
+    healthcheck:
+      test:
+      - CMD-SHELL
+      - pg_isready -U ${FileService_DB_POSTGRES_USER} -d ${FileService_DB_POSTGRES_DB}
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 60s
+    volumes:
+    - fileService_data:/var/lib/postgresql/data
+  fileservice:
+    build:
+      context: .
+      dockerfile: src/backend/FileService/Dockerfile
+    depends_on:
+      files-db:
+        condition: service_healthy
+      authservice:
+        condition: service_started
+    restart: unless-stopped
+    environment:
+      ASPNETCORE_ENVIRONMENT: ${ASPNETCORE_ENVIRONMENT:-Production}
+      FileService_DB_ConnectionString: Host=files-db;Port=5432;Database=${FileService_DB_POSTGRES_DB};Username=${FileService_DB_POSTGRES_USER};Password=${FileService_DB_POSTGRES_PASSWORD};
+      Jwt__Secret: ${Jwt__Secret:?Missing JWT secret in .env}
+      Jwt__ExpiryMinutes: ${Jwt__ExpiryMinutes:-60}
+      FileService_Storage: ${FileService_Storage}
+      FileService_MountVolume: ${FileService_MountVolume}
+    volumes:
+      - ${FileService_MountVolume}:${FileService_Storage}
+
+  authservice:
+    build:
+      context: .
+      dockerfile: src/backend/AuthService/Dockerfile
+    depends_on:
+      users-db:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    restart: unless-stopped
+    environment:
+      ASPNETCORE_ENVIRONMENT: ${ASPNETCORE_ENVIRONMENT:-Production}
+      AuthService_DB_ConnectionString: Host=users-db;Port=5432;Database=${AuthService_DB_POSTGRES_DB};Username=${AuthService_DB_POSTGRES_USER};Password=${AuthService_DB_POSTGRES_PASSWORD};
+      Jwt__Secret: ${Jwt__Secret:?Missing JWT secret in .env}
+      Jwt__ExpiryMinutes: ${Jwt__ExpiryMinutes:-60}
+      ADMIN_USERNAME: ${ADMIN_USERNAME}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD}
+      RABBITMQ_USER: ${RABBITMQ_USER}
+      RABBITMQ_PASS: ${RABBITMQ_PASS}
+      RABBITMQ_HOST: ${RABBITMQ_HOST}
+      RABBITMQ_VHOST: ${RABBITMQ_VHOST}
+      RABBITMQ_PORT: ${RABBITMQ_PORT}
+  gateway:
+    build:
+      context: ./gateway
+    restart: unless-stopped
+    depends_on:
+    - authservice
+    - articlesservice
+    - fileservice
+    - tasksservice
+    - userservice
+    ports:
+    - 80:80
+    - 443:443
+    volumes:
+      - ${Ssl_CertPath}:/etc/letsencrypt:ro
+  articlesservice:
+    build:
+      context: .
+      dockerfile: src/backend/ArticlesService/Dockerfile
+    depends_on:
+      articles-db:
+        condition: service_healthy
+      authservice:
+        condition: service_started
+    restart: unless-stopped
+    environment:
+      ASPNETCORE_ENVIRONMENT: ${ASPNETCORE_ENVIRONMENT:-Production}
+      ArticlesService_DB_ConnectionString: Host=articles-db;Port=5432;Database=${ArticlesService_DB_POSTGRES_DB};Username=${ArticlesService_DB_POSTGRES_USER};Password=${ArticlesService_DB_POSTGRES_PASSWORD};
+      Jwt__Secret: ${Jwt__Secret:?Missing JWT secret in .env}
+      Jwt__ExpiryMinutes: ${Jwt__ExpiryMinutes:-60}
+  tasksservice:
+    build:
+      context: .
+      dockerfile: src/backend/TasksService/Dockerfile
+    depends_on:
+      tasks-db:
+        condition: service_healthy
+      authservice:
+        condition: service_started
+      rabbitmq:
+        condition: service_healthy
+    restart: unless-stopped
+    environment:
+      ASPNETCORE_ENVIRONMENT: ${ASPNETCORE_ENVIRONMENT:-Production}
+      TasksService_DB_ConnectionString: Host=tasks-db;Port=5432;Database=${TasksService_DB_POSTGRES_DB};Username=${TasksService_DB_POSTGRES_USER};Password=${TasksService_DB_POSTGRES_PASSWORD};
+      Jwt__Secret: ${Jwt__Secret:?Missing JWT secret in .env}
+      Jwt__ExpiryMinutes: ${Jwt__ExpiryMinutes:-60}
+      RABBITMQ_USER: ${RABBITMQ_USER}
+      RABBITMQ_PASS: ${RABBITMQ_PASS}
+      RABBITMQ_HOST: ${RABBITMQ_HOST}
+      RABBITMQ_VHOST: ${RABBITMQ_VHOST}
+      RABBITMQ_PORT: ${RABBITMQ_PORT}
+  userservice:
+    build:
+      context: .
+      dockerfile: src/backend/UserService/Dockerfile
+    depends_on:
+      userService-db:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    restart: unless-stopped
+    environment:
+      ASPNETCORE_ENVIRONMENT: ${ASPNETCORE_ENVIRONMENT:-Production}
+      UserService_DB_ConnectionString: Host=userService-db;Port=5432;Database=${UserService_DB_POSTGRES_DB};Username=${UserService_DB_POSTGRES_USER};Password=${UserService_DB_POSTGRES_PASSWORD};
+      Jwt__Secret: ${Jwt__Secret:?Missing JWT secret in .env}
+      Jwt__ExpiryMinutes: ${Jwt__ExpiryMinutes:-60}
+      RABBITMQ_USER: ${RABBITMQ_USER}
+      RABBITMQ_PASS: ${RABBITMQ_PASS}
+      RABBITMQ_HOST: ${RABBITMQ_HOST}
+      RABBITMQ_VHOST: ${RABBITMQ_VHOST}
+      RABBITMQ_PORT: ${RABBITMQ_PORT}
+volumes:
+  authService_data: null
+  articlesService_data: null
+  tasksService_data: null
+  rabbitmq_data: null
+  userService_data: null
+  fileService_data: null
