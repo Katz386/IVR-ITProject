@@ -10,6 +10,8 @@
   <link rel="stylesheet" href="assets/css/style.css">
   <link rel="stylesheet" href="assets/css/header.css">
   <link rel="stylesheet" href="assets/css/auth.css">
+
+  <script src="/assets/js/auth.js" defer></script>
 </head>
 <body>
   <header class="header">
@@ -51,8 +53,10 @@
         autocomplete="current-password"
         required
       >
+    
+      <p class="auth-message" id="auth-message" role="status"></p>
 
-      <button class="button button-light auth-submit" type="button">
+      <button class="button button-light auth-submit" type="submit">
         Войти
       </button>
     </form>
