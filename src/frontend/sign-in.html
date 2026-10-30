@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>28web - Вход</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anonymous+Pro:wght@400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/header.css">
+  <link rel="stylesheet" href="assets/css/auth.css">
+</head>
+<body>
+  <header class="header">
+    <a class="logo" href="/">28web</a>
+
+    <nav class="navigation">
+      <a href="/tasks">задания</a>
+      <a href="/articles">статьи</a>
+      <a href="/materials">др. материалы</a>
+    </nav>
+
+    <div class="account">
+      <a class="button button-light" href="/sign-in">Войти</a>
+      <a class="button button-dark" href="/sign-up">Регистрация</a>
+    </div>
+  </header>
+
+  <main class="auth">
+    <h1>Вход</h1>
+    <p class="auth-description">Войдите в свой аккаунт</p>
+
+    <form class="auth-form" id="sign-in-form" method="post">
+      <label for="username">Имя пользователя</label>
+      <input
+        id="username"
+        name="username"
+        type="text"
+        placeholder="Введите имя пользователя"
+        autocomplete="username"
+        required
+      >
+
+      <label for="password">Пароль</label>
+      <input
+        id="password"
+        name="password"
+        type="password"
+        placeholder="Введите пароль"
+        autocomplete="current-password"
+        required
+      >
+
+      <button class="button button-light auth-submit" type="button">
+        Войти
+      </button>
+    </form>
+
+    <p class="auth-bottom">
+      Нет аккаунта? <a href="/sign-up">Зарегистрироваться</a>
+    </p>
+  </main>
+</body>
+</html>
