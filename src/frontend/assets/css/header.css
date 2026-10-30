@@ -1,0 +1,90 @@
+.header {
+  min-height: 57px;
+  padding: 10px 30px;
+  border: 1px solid var(--color-border-header);
+  background: var(--color-header);
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 24px;
+}
+
+.logo {
+  justify-self: start;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 32px;
+}
+
+.logo:hover {
+  opacity: 0.75;
+}
+
+.navigation {
+  display: flex;
+  gap: 34px;
+}
+
+.navigation a {
+  font-size: 20px;
+}
+
+.navigation a:hover {
+  text-decoration: underline;
+}
+
+.account {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+@media (max-width: 800px) {
+  .header {
+    padding: 12px 20px;
+    grid-template-columns: 1fr auto;
+    gap: 16px;
+  }
+
+  .logo {
+    font-size: 28px;
+  }
+
+  .account {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .navigation {
+    grid-column: 1 / -1;
+    justify-content: center;
+    gap: 28px;
+  }
+
+  .navigation a {
+    font-size: 18px;
+  }
+
+  .account .button {
+    font-size: 16px;
+    padding: 5px 10px;
+  }
+}
+
+@media (max-width: 380px) {
+  .header {
+    padding: 12px;
+    gap: 12px;
+  }
+
+  .navigation {
+    gap: 20px;
+  }
+
+  .navigation a {
+    font-size: 16px;
+  }
+
+  .account {
+    gap: 8px;
+  }
+}

@@ -160,6 +160,7 @@ services:
     - 443:443
     volumes:
       - ${Ssl_CertPath}:/etc/letsencrypt:ro
+      - ./src/frontend:/usr/share/nginx/html:ro
   articlesservice:
     build:
       context: .

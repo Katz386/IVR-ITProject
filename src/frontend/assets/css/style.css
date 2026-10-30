@@ -1,0 +1,70 @@
+:root {
+  --color-bg: #141414;
+  --color-header: #1a1a1a;
+  --color-text: #f5f5f5;
+  --color-white: #fff;
+
+  --color-border-header: #8b8b8b;
+  --color-border-light: #929292;
+  --color-border: #777;
+
+  --color-button-light: #e4e4e4;
+  --color-button-light-text: #222;
+  --color-button-dark: #282828;
+  --color-button-dark-hover: #3b3b3b;
+
+  --color-text-muted: #aaa;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: 'Anonymous Pro', monospace;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.button {
+  display: inline-block;
+  min-height: 32px;
+  padding: 5px 14px;
+  border: 1px solid transparent;
+  font-family: 'Anonymous Pro', monospace;
+  font-size: 18px;
+  white-space: nowrap;
+  transition: background 0.2s;
+}
+
+.button-light {
+  background: var(--color-button-light);
+  border-color: var(--color-border-light);
+  color: var(--color-button-light-text);
+}
+
+.button-dark {
+  background: var(--color-button-dark);
+  color: var(--color-text);
+}
+
+.button-light:hover {
+  background: var(--color-white);
+}
+
+.button-dark:hover {
+  background: var(--color-button-dark-hover);
+  border-color: var(--color-border);
+}
+
+@media (max-width: 380px) {
+  .button {
+    padding: 5px 10px;
+  }
+}
