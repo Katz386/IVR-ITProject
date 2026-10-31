@@ -48,7 +48,7 @@ namespace AuthService.Infrastructure
             db.Users.Add(newAdmin);
             await db.SaveChangesAsync();
 
-            var serviceBus = scope.ServiceProvider.GetRequiredService<IServiceBus>();
+            var serviceBus = services.GetRequiredService<IServiceBus>();
             await serviceBus.PublishAsync(new AccountCreated(Guid.NewGuid(), newAdmin.UID, DateTime.UtcNow));
 
             Console.WriteLine("[+] AdminSeeder: Admin user successfully created");
