@@ -1,8 +1,10 @@
-﻿using AuthService.Domain.Models;
+﻿using AuthService.Application.Interfaces;
+using AuthService.Domain.Models;
 using AuthService.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using SharedContracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
