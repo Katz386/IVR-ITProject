@@ -90,6 +90,7 @@ namespace AuthService.Application.Services
                     string token = _jwtService.GenerateUserToken(user);
 
                     await _serviceBus.PublishAsync(new AccountCreated(Guid.NewGuid(), guid, DateTime.UtcNow));
+                    await _serviceBus.PublishAsync(new AccountCreatedStatistics(Guid.NewGuid(), DateTime.UtcNow));
 
                     return new SignUpResponse { Message = "Success!", StatusCode = 201, Token = token };
                 }

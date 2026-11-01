@@ -19,8 +19,16 @@ namespace UserService.Infrastructure.Persistence.Migrations
                     Name = table.Column<string>(type: "text", nullable: false),
                     TasksSolved = table.Column<string>(type: "text", nullable: false),
                     ArticlesRead = table.Column<string>(type: "text", nullable: false),
+                    ArticlesReadCount = table.Column<int>(type: "integer", nullable: false),
+                    EasyTasksSolvedCount = table.Column<int>(type: "integer", nullable: false),
+                    MediumTasksSolvedCount = table.Column<int>(type: "integer", nullable: false),
+                    HardTasksSolvedCount = table.Column<int>(type: "integer", nullable: false),
                     IsPrivate = table.Column<bool>(type: "boolean", nullable: false),
-                    Created = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                    LastActivity = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    LastTaskSolvedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    LastTaskSolvedId = table.Column<int>(type: "integer", nullable: false),
+                    Created = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    AdminComment = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {

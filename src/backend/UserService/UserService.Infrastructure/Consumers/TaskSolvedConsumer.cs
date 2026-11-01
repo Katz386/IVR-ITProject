@@ -13,7 +13,7 @@ namespace UserService.Infrastructure.Consumers
     {
         public async Task Consume(ConsumeContext<TaskSolved> context)
         {
-            await profileService.SolveTask(context.Message.AccountId, context.Message.TaskId);
+            await profileService.SolveTask(context.Message.AccountId, context.Message.TaskId, context.Message.Difficulty);
         }
     }
 }

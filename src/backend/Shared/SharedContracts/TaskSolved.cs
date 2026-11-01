@@ -6,5 +6,5 @@ using System.Threading.Tasks;
 
 namespace SharedContracts
 {
-    public record TaskSolved (Guid EventId, Guid AccountId, int TaskId, DateTime Time);
+    public record TaskSolved (Guid EventId, Guid AccountId, int TaskId, string Difficulty, DateTime Time);
 }

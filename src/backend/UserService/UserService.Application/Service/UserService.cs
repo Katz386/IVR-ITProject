@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using UserService.Application.DTOs.Request;
@@ -12,7 +13,7 @@ namespace UserService.Application.Service
 {
     public class UserService : IUserService
     {
-        private readonly string[] arr = ["Furry", "Diddy", "Epic", "Giga", "Bobby", "Bot", "Big", "King", "Hacker", "Clanker", "Nerd"];
+        private readonly string[] arr = ["Furry", "Diddy", "Epic", "Giga", "Bobby", "Bot", "Big", "King", "Hacker", "Clanker", "Nerd", "Wise"];
 
         private readonly IUserRepository _userRepository;
 
@@ -32,7 +33,15 @@ namespace UserService.Application.Service
                 TasksSolved = "",
                 ArticlesRead = "",
                 IsPrivate = true,
-                Created = DateTime.UtcNow
+                Created = DateTime.UtcNow,
+                ArticlesReadCount = 0,
+                EasyTasksSolvedCount = 0,
+                MediumTasksSolvedCount = 0,
+                HardTasksSolvedCount = 0,
+                LastActivity = DateTime.UtcNow,
+                LastTaskSolvedDate = null,
+                LastTaskSolvedId = -1,
+                AdminComment = ""
             })) {
                 Console.WriteLine($"Profile created. Account id = {id}");
                 return true;
@@ -59,7 +68,20 @@ namespace UserService.Application.Service
                 return new ReadArticleResponse { Message = "Profile not found", Status = 404 };
             }
 
+            if (articleId < 0 || articleId > 2000)
+            {
+                Console.WriteLine($"{profile.Id} is trying to increase the amount of read articles");
+                return new ReadArticleResponse { Message = "Bad article id", Status = 400 };
+            }
+
+            if (IsNumInSequence(profile.ArticlesRead, articleId.ToString()))
+                return new ReadArticleResponse { Message = "Article has already been read", Status = 400 };
+
             profile.ArticlesRead = InsertNumber(profile.ArticlesRead, articleId.ToString());
+
+            profile.ArticlesReadCount += 1;
+
+            profile.LastActivity = DateTime.UtcNow;
 
             if (await _userRepository.SaveChangesAsync())
             {
@@ -71,7 +93,7 @@ namespace UserService.Application.Service
             }
         }
 
-        public async Task<bool> SolveTask(Guid id, int taskId)
+        public async Task<bool> SolveTask(Guid id, int taskId, string difficulty)
         {
             Profile? profile = await _userRepository.GetProfileByAccountId(id);
 
@@ -81,7 +103,27 @@ namespace UserService.Application.Service
                 return false;
             }
 
+            if (IsNumInSequence(profile.TasksSolved, taskId.ToString()))
+                return true;
+
             profile.TasksSolved = InsertNumber(profile.TasksSolved, taskId.ToString());
+
+            switch (difficulty.ToLower().Trim())
+            {
+                case "easy":
+                    profile.EasyTasksSolvedCount += 1;
+                    break;
+                case "medium":
+                    profile.MediumTasksSolvedCount += 1;
+                    break;
+                case "hard":
+                    profile.HardTasksSolvedCount += 1;
+                    break;
+            }
+
+            profile.LastActivity = DateTime.UtcNow;
+            profile.LastTaskSolvedDate = DateTime.UtcNow;
+            profile.LastTaskSolvedId = taskId;
 
             if (await _userRepository.SaveChangesAsync())
             {
@@ -127,6 +169,32 @@ namespace UserService.Application.Service
             }
 
             return result + (a == b ? a.ToString() : a + "-" + b);
+        }
+
+        private static bool IsNumInSequence(string s, string num)
+        {
+            int n = int.Parse(num);
+
+            foreach (string part in s.Split(","))
+            {
+                int k = part.IndexOf('-');
+
+                if (k == -1)
+                {
+                    if (part == num)
+                        return true;
+                }
+                else
+                {
+                    int x = int.Parse(part.Substring(0, k));
+                    int y = int.Parse(part.Substring(k + 1));
+
+                    if (n >= x && n <= y)
+                        return true;
+                }
+            }
+
+            return false;
         }
 
         public async Task<EditProfileResponse> EditProfile(string id, EditProfileRequest request)

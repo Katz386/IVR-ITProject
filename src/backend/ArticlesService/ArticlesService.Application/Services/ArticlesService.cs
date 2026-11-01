@@ -2,6 +2,7 @@
 using ArticlesService.Application.DTOs.Response;
 using ArticlesService.Application.Interfaces;
 using ArticlesService.Domain.Models;
+using SharedContracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,10 +14,11 @@ namespace ArticlesService.Application.Services
     public class ArticlesService : IArticlesService
     {
         private readonly IArticlesRepository _articlesRepository;
-
-        public ArticlesService (IArticlesRepository articlesRepository)
+        private readonly IServiceBus _serviceBus;
+        public ArticlesService (IArticlesRepository articlesRepository, IServiceBus serviceBus)
         {
             _articlesRepository = articlesRepository;
+            _serviceBus = serviceBus;
         }
 
         public async Task<AddArticleResponse> AddArticle(AddArticleRequest request)
@@ -35,7 +37,10 @@ namespace ArticlesService.Application.Services
             };
 
             if (await _articlesRepository.AddArticle(article))
-                return new AddArticleResponse { Article = article, Message = "Success", Status = 201};
+            {
+                await _serviceBus.PublishAsync(new ArticleCreated(Guid.NewGuid(), DateTime.UtcNow));
+                return new AddArticleResponse { Article = article, Message = "Success", Status = 201 };
+            }
             else
                 return new AddArticleResponse { Message = "Unknown internal error", Status = 500 };
         }
@@ -53,7 +58,10 @@ namespace ArticlesService.Application.Services
                 return new DeleteArticleResponse { Message = "Article not found", Status = 404 };
 
             if (await _articlesRepository.DeleteArticle(article))
+            {
+                await _serviceBus.PublishAsync(new ArticleDeleted(Guid.NewGuid(), articleId, DateTime.UtcNow));
                 return new DeleteArticleResponse { Message = "Success", Status = 200 };
+            }
             else
                 return new DeleteArticleResponse { Message = "Unknown internal error", Status = 500 };
 

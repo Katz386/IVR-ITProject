@@ -28,15 +28,40 @@ namespace UserService.Infrastructure.Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
+                    b.Property<string>("AdminComment")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<string>("ArticlesRead")
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<int>("ArticlesReadCount")
+                        .HasColumnType("integer");
+
                     b.Property<DateTime>("Created")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<int>("EasyTasksSolvedCount")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("HardTasksSolvedCount")
+                        .HasColumnType("integer");
+
                     b.Property<bool>("IsPrivate")
                         .HasColumnType("boolean");
+
+                    b.Property<DateTime>("LastActivity")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("LastTaskSolvedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("LastTaskSolvedId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("MediumTasksSolvedCount")
+                        .HasColumnType("integer");
 
                     b.Property<string>("Name")
                         .IsRequired()

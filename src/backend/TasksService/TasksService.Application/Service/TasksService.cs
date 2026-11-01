@@ -40,6 +40,7 @@ namespace TasksService.Application.Service
 
             if (await _tasksRepository.CreateTask(task))
             {
+                await _serviceBus.PublishAsync(new TaskCreated(Guid.NewGuid(), task.Difficulty, DateTime.UtcNow));
                 return new CreateTaskResponse { Task = task, Message = "Success", Status = 201 };
             }
             else
@@ -62,8 +63,11 @@ namespace TasksService.Application.Service
                 return new DeleteTaskResponse { Message = "Task not found", Status = 404 };
             }
 
+            string difficulty = task.Difficulty;
+
             if (await _tasksRepository.DeleteTask(task))
             {
+                await _serviceBus.PublishAsync(new TaskDeleted(Guid.NewGuid(), guid, difficulty, DateTime.UtcNow));
                 return new DeleteTaskResponse { Task = task, Message = "Success", Status = 200 };
             }
             else
@@ -209,7 +213,7 @@ namespace TasksService.Application.Service
 
             if (task.Flag == flag.Trim())
             {
-                await _serviceBus.PublishAsync(new TaskSolved(Guid.NewGuid(), Guid.Parse(id), guid, DateTime.UtcNow));
+                await _serviceBus.PublishAsync(new TaskSolved(Guid.NewGuid(), Guid.Parse(id), guid, task.Difficulty, DateTime.UtcNow));
                 return new SolveTaskResponse { Message = "Solved!", Status = 200 };
             }
             else

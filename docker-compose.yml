@@ -103,6 +103,23 @@ services:
       start_period: 60s
     volumes:
     - fileService_data:/var/lib/postgresql/data
+  platform-db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${PlatformService_DB_POSTGRES_DB}
+      POSTGRES_USER: ${PlatformService_DB_POSTGRES_USER}
+      POSTGRES_PASSWORD: ${PlatformService_DB_POSTGRES_PASSWORD}
+    healthcheck:
+      test:
+      - CMD-SHELL
+      - pg_isready -U ${PlatformService_DB_POSTGRES_USER} -d ${PlatformService_DB_POSTGRES_DB}
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 60s
+    volumes:
+    - platformService_data:/var/lib/postgresql/data
   fileservice:
     build:
       context: .
@@ -121,8 +138,7 @@ services:
       FileService_Storage: ${FileService_Storage}
       FileService_MountVolume: ${FileService_MountVolume}
     volumes:
-      - ${FileService_MountVolume}:${FileService_Storage}
-
+    - ${FileService_MountVolume}:${FileService_Storage}
   authservice:
     build:
       context: .
@@ -159,8 +175,8 @@ services:
     - 80:80
     - 443:443
     volumes:
-      - ${Ssl_CertPath}:/etc/letsencrypt:ro
-      - ./src/frontend:/usr/share/nginx/html:ro
+    - ${Ssl_CertPath}:/etc/letsencrypt:ro
+    - ./src/frontend:/usr/share/nginx/html:ro
   articlesservice:
     build:
       context: .
@@ -170,12 +186,19 @@ services:
         condition: service_healthy
       authservice:
         condition: service_started
+      rabbitmq:
+        condition: service_healthy
     restart: unless-stopped
     environment:
       ASPNETCORE_ENVIRONMENT: ${ASPNETCORE_ENVIRONMENT:-Production}
       ArticlesService_DB_ConnectionString: Host=articles-db;Port=5432;Database=${ArticlesService_DB_POSTGRES_DB};Username=${ArticlesService_DB_POSTGRES_USER};Password=${ArticlesService_DB_POSTGRES_PASSWORD};
       Jwt__Secret: ${Jwt__Secret:?Missing JWT secret in .env}
       Jwt__ExpiryMinutes: ${Jwt__ExpiryMinutes:-60}
+      RABBITMQ_USER: ${RABBITMQ_USER}
+      RABBITMQ_PASS: ${RABBITMQ_PASS}
+      RABBITMQ_HOST: ${RABBITMQ_HOST}
+      RABBITMQ_VHOST: ${RABBITMQ_VHOST}
+      RABBITMQ_PORT: ${RABBITMQ_PORT}
   tasksservice:
     build:
       context: .
@@ -218,6 +241,27 @@ services:
       RABBITMQ_HOST: ${RABBITMQ_HOST}
       RABBITMQ_VHOST: ${RABBITMQ_VHOST}
       RABBITMQ_PORT: ${RABBITMQ_PORT}
+  platformservice:
+    build:
+      context: .
+      dockerfile: src/backend/PlatformService/Dockerfile
+    depends_on:
+      platform-db:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    restart: unless-stopped
+    environment:
+      ASPNETCORE_ENVIRONMENT: ${ASPNETCORE_ENVIRONMENT:-Production}
+      PlatformService_DB_ConnectionString: Host=platform-db;Port=5432;Database=${PlatformService_DB_POSTGRES_DB};Username=${PlatformService_DB_POSTGRES_USER};Password=${PlatformService_DB_POSTGRES_PASSWORD};
+      Jwt__Secret: ${Jwt__Secret:?Missing JWT secret in .env}
+      Jwt__ExpiryMinutes: ${Jwt__ExpiryMinutes:-60}
+      RABBITMQ_USER: ${RABBITMQ_USER}
+      RABBITMQ_PASS: ${RABBITMQ_PASS}
+      RABBITMQ_HOST: ${RABBITMQ_HOST}
+      RABBITMQ_VHOST: ${RABBITMQ_VHOST}
+      RABBITMQ_PORT: ${RABBITMQ_PORT}
+
 volumes:
   authService_data: null
   articlesService_data: null
@@ -225,3 +269,4 @@ volumes:
   rabbitmq_data: null
   userService_data: null
   fileService_data: null
+  platformService_data: null
