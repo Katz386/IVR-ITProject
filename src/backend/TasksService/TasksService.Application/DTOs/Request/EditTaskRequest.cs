@@ -10,12 +10,14 @@ namespace TasksService.Application.DTOs.Request
     public class EditTaskRequest
     {
         [MaxLength(150, ErrorMessage = "Too long")]
+        [RegularExpression(@"\A[a-zA-Z\dа-яА-ЯёЁ _=+.,!?-]+\z", ErrorMessage = "Bad name")]
         public string? Name { get; set; }
         [MaxLength(1000, ErrorMessage = "Too long")]
         public string? Description { get; set; }
         [MaxLength(500, ErrorMessage = "Too long")]
         public string? Flag { get; set; }
         [MaxLength(200, ErrorMessage = "Too long")]
+        [RegularExpression(@"\A[a-zA-Z\dа-яА-ЯёЁ _=+.,!?-]+\z", ErrorMessage = "Invalid topic")]
         public string? Topic { get; set; }
         [MaxLength(1000, ErrorMessage = "Too long")]
         public string? File { get; set; }

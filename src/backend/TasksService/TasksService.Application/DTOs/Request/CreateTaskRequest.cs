@@ -21,6 +21,7 @@ namespace TasksService.Application.DTOs.Request
         [Required(ErrorMessage = "Required field is missing")]
         public string Flag { get; set; }
         [MaxLength(200, ErrorMessage = "Too long")]
+        [RegularExpression(@"\A[a-zA-Z\dа-яА-ЯёЁ _=+.,!?-]+\z", ErrorMessage = "Invalid topic")]
         public string Topic { get; set; }
         [MaxLength(1000, ErrorMessage = "Too long")]
         [Required(ErrorMessage = "Required field is missing")]

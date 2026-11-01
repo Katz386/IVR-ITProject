@@ -155,6 +155,18 @@ namespace TasksService.Application.Service
                 if (!Enum.IsDefined(request.sortBy))
                     return new GetTasksListResponse{ Message = "Invalid sort type", Status = 400 };
 
+                if (!string.IsNullOrEmpty(request.search) && !Regex.IsMatch(request.search, @"\A[a-zA-Z\dа-яА-ЯёЁ _=+.,!?-]+\z"))
+                    return new GetTasksListResponse { Message = "Bad name", Status = 400 };
+
+                if (!string.IsNullOrEmpty(request.difficulty) && request.difficulty.ToLower().Trim() != "easy" && request.difficulty.ToLower().Trim() != "medium" && request.difficulty.ToLower().Trim() != "hard")
+                    return new GetTasksListResponse { Message = "Invalid difficulty", Status = 400 };
+
+                if (!string.IsNullOrEmpty(request.topic) && (!Regex.IsMatch(request.topic, @"\A[a-zA-Z\dа-яА-ЯёЁ _=+.,!?-]+\z") || request.topic.Length > 200))
+                    return new GetTasksListResponse { Message = "Invalid topic", Status = 400 };
+
+                if (!string.IsNullOrEmpty(request.solvedTasks) && !Regex.IsMatch(request.solvedTasks, @"\A[\d,-]+\z"))
+                    return new GetTasksListResponse { Message = "Invalid solved tasks", Status = 400 };
+
                 var tasks = await _tasksRepository.GetTasks(request, pageSize);
 
                 if (tasks == null || tasks.Count <= 0)
