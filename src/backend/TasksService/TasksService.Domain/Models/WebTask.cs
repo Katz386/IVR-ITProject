@@ -14,6 +14,7 @@ namespace TasksService.Domain.Models
         public string Description { get; set; }
         [JsonIgnore(Condition = JsonIgnoreCondition.Always)]
         public string Flag {  get; set; }
+        public string Topic { get; set; }
         public string File { get; set; }
         public string Difficulty { get; set; }
         public string[] Hints { get; set; }

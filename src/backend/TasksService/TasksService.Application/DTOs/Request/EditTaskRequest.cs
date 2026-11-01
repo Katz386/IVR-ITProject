@@ -15,6 +15,8 @@ namespace TasksService.Application.DTOs.Request
         public string? Description { get; set; }
         [MaxLength(500, ErrorMessage = "Too long")]
         public string? Flag { get; set; }
+        [MaxLength(200, ErrorMessage = "Too long")]
+        public string? Topic { get; set; }
         [MaxLength(1000, ErrorMessage = "Too long")]
         public string? File { get; set; }
         [MaxLength(200, ErrorMessage = "Too long")]

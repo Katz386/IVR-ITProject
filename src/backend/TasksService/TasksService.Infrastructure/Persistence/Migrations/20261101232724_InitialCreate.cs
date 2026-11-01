@@ -21,6 +21,7 @@ namespace TasksService.Infrastructure.Persistence.Migrations
                     Name = table.Column<string>(type: "text", nullable: false),
                     Description = table.Column<string>(type: "text", nullable: false),
                     Flag = table.Column<string>(type: "text", nullable: false),
+                    Topic = table.Column<string>(type: "text", nullable: false),
                     File = table.Column<string>(type: "text", nullable: false),
                     Difficulty = table.Column<string>(type: "text", nullable: false),
                     Hints = table.Column<string[]>(type: "text[]", nullable: false),

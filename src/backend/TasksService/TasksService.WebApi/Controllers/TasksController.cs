@@ -30,9 +30,9 @@ namespace TasksService.WebApi.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetTasks([FromQuery] int page)
+        public async Task<IActionResult> GetTasks([FromQuery] GetTasksRequest request)
         {
-            var response = await _taskService.GetTasks(page);
+            var response = await _taskService.GetTasks(request);
 
             if (response == null)
                 return StatusCode(500, new { Message = "Unhandled internal error", Status = 500 });

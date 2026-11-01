@@ -11,6 +11,7 @@ namespace TasksService.Application.DTOs.Request
     public class CreateTaskRequest
     {
         [MaxLength(150, ErrorMessage = "Too long")]
+        [RegularExpression(@"\A[a-zA-Z\dа-яА-ЯёЁ _=+.,!?-]+\z", ErrorMessage = "Bad name")]
         [Required(ErrorMessage = "Required field is missing")]
         public string Name { get; set; }
         [MaxLength(1000, ErrorMessage = "Too long")]
@@ -19,6 +20,8 @@ namespace TasksService.Application.DTOs.Request
         [MaxLength(500, ErrorMessage = "Too long")]
         [Required(ErrorMessage = "Required field is missing")]
         public string Flag { get; set; }
+        [MaxLength(200, ErrorMessage = "Too long")]
+        public string Topic { get; set; }
         [MaxLength(1000, ErrorMessage = "Too long")]
         [Required(ErrorMessage = "Required field is missing")]
         public string File { get; set; }

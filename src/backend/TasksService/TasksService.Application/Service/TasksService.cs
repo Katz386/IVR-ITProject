@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using TasksService.Application.DTOs.Request;
 using TasksService.Application.DTOs.Response;
@@ -30,6 +31,7 @@ namespace TasksService.Application.Service
                 Name = request.Name,
                 Description = request.Description,
                 Flag = request.Flag,
+                Topic = request.Topic,
                 File = request.File,
                 Difficulty = request.Difficulty,
                 Hints = request.Hints,
@@ -95,6 +97,7 @@ namespace TasksService.Application.Service
                 request.Name ??= task.Name;
                 request.Description ??= task.Description;
                 request.Flag ??= task.Flag;
+                request.Topic ??= task.Topic;
                 request.File ??= task.File;
                 request.Difficulty ??= task.Difficulty;
                 request.Hints ??= task.Hints;
@@ -104,6 +107,7 @@ namespace TasksService.Application.Service
                 task.Name = request.Name;
                 task.Description = request.Description;
                 task.Flag = request.Flag;
+                task.Topic = request.Topic;
                 task.File = request.File;
                 task.Difficulty = request.Difficulty;
                 task.Hints = request.Hints;
@@ -139,17 +143,19 @@ namespace TasksService.Application.Service
                 return new GetTaskResponse { Task = task, Message = "Success!", Status = 200 };
             }
         }
-
-        public async Task<GetTasksListResponse> GetTasks(int page)
+        public async Task<GetTasksListResponse> GetTasks(GetTasksRequest request)
         {
             try
             {
                 int pageSize = 16;
 
-                if (page <= 0 || page > 4000)
-                    return new GetTasksListResponse { Message = "Invalid task id", Status = 400 };
+                if (request.page <= 0 || request.page > 4000)
+                    return new GetTasksListResponse{ Message = "Invalid page",  Status = 400 };
 
-                var tasks = await _tasksRepository.GetTasks(page, pageSize);
+                if (!Enum.IsDefined(request.sortBy))
+                    return new GetTasksListResponse{ Message = "Invalid sort type", Status = 400 };
+
+                var tasks = await _tasksRepository.GetTasks(request, pageSize);
 
                 if (tasks == null || tasks.Count <= 0)
                     return new GetTasksListResponse { Message = "No tasks mathcing the request", Status = 404 };

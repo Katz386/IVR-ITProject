@@ -15,7 +15,7 @@ namespace TasksService.Application.Interfaces
         public Task<DeleteTaskResponse> DeleteTask(string id);
         public Task<EditTaskResponse> EditTask(EditTaskRequest request, string id);
         public Task<GetTaskResponse> GetTask(string id);
-        public Task<GetTasksListResponse> GetTasks(int page);
+        public Task<GetTasksListResponse> GetTasks(GetTasksRequest request);
         public Task<SolveTaskResponse> SolveTask(string id, string flag);
         public Task<SolveTaskResponse> SolveTask(string id, string taskId, string flag);
     }

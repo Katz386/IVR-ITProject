@@ -12,7 +12,7 @@ using TasksService.Infrastructure.Persistence;
 namespace TasksService.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20261023000350_InitialCreate")]
+    [Migration("20261101232724_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -66,6 +66,10 @@ namespace TasksService.Infrastructure.Persistence.Migrations
 
                     b.Property<int>("SortOrder")
                         .HasColumnType("integer");
+
+                    b.Property<string>("Topic")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
