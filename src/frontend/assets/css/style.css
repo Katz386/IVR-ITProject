@@ -14,6 +14,11 @@
   --color-button-dark-hover: #3b3b3b;
 
   --color-text-muted: #aaa;
+  --color-panel: #1a1a1a;
+  --color-chart-track: #d9d9d9;
+  --color-easy: #3b823c;
+  --color-medium: #9f9a2f;
+  --color-hard: #732b2b;
 }
 
 * {

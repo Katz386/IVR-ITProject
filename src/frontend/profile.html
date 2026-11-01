@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>28web - Профиль</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anonymous+Pro:wght@400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="stylesheet" href="/assets/css/header.css">
+  <link rel="stylesheet" href="/assets/css/profile.css">
+
+  <script src="/assets/js/header.js" defer></script>
+  <script src="/assets/js/profile.js" defer></script>
+</head>
+<body>
+  <header class="header">
+    <a class="logo" href="/">28web</a>
+
+    <nav class="navigation">
+      <a href="/tasks">задания</a>
+      <a href="/articles">статьи</a>
+      <a href="/materials">др. материалы</a>
+    </nav>
+
+    <div class="account" id="account">
+      <a class="button button-light" href="/sign-in">Войти</a>
+      <a class="button button-dark" href="/sign-up">Регистрация</a>
+    </div>
+  </header>
+
+  <main class="profile-page">
+    <img class="profile-art profile-art-right" src="/assets/images/profile-right.png" alt="">
+    <img class="profile-art profile-art-left" src="/assets/images/profile-left.png" alt="">
+
+    <div class="profile-content">
+      <p class="profile-message" id="profile-message" role="status">Загрузка профиля...</p>
+      <a class="profile-login" id="profile-login" href="/sign-in" hidden>Войти в аккаунт</a>
+
+      <div id="profile-data" hidden>
+        <div class="profile-person">
+          <img class="avatar" src="/assets/images/avatar.jpg" alt="" width="75" height="75">
+          <div class="profile-person-text">
+            <h1 id="profile-name"></h1>
+            <p>Дата регистрации: <span id="profile-created"></span></p>
+          </div>
+        </div>
+
+        <div class="profile-grid">
+          <section class="solved-section">
+            <h2>Решенные задания</h2>
+            <div class="profile-panel solved-panel">
+              <div class="solved-row">
+                <span>Всего</span>
+                <div class="bar"><div class="bar-fill bar-total" id="total-bar"></div></div>
+                <span class="solved-number" id="total-count">0</span>
+              </div>
+              <div class="solved-row">
+                <span>Easy</span>
+                <div class="bar"><div class="bar-fill bar-easy" id="easy-bar"></div></div>
+                <span class="solved-number" id="easy-count">0</span>
+              </div>
+              <div class="solved-row">
+                <span>Medium</span>
+                <div class="bar"><div class="bar-fill bar-medium" id="medium-bar"></div></div>
+                <span class="solved-number" id="medium-count">0</span>
+              </div>
+              <div class="solved-row">
+                <span>Hard</span>
+                <div class="bar"><div class="bar-fill bar-hard" id="hard-bar"></div></div>
+                <span class="solved-number" id="hard-count">0</span>
+              </div>
+            </div>
+          </section>
+
+          <section class="last-section">
+            <h2>Последнее решённое задание</h2>
+            <div class="profile-panel last-panel">
+              <p id="last-message" role="status">Загрузка задания...</p>
+              <div id="last-details" hidden>
+                <p>Дата решения: <span id="last-date"></span></p>
+                <p>Сложность: <span id="last-difficulty">-</span></p>
+                <p>Название: <span id="last-name">-</span></p>
+              </div>
+            </div>
+          </section>
+
+          <section class="progress-section">
+            <h2>Прогресс</h2>
+            <div class="profile-panel progress-panel">
+              <div class="progress-item">
+                <h3>Статьи:</h3>
+                <div class="progress-ring" id="articles-ring">
+                  <div class="progress-center">
+                    <span class="progress-caption">Completed</span>
+                    <strong id="articles-percent">-</strong>
+                  </div>
+                </div>
+              </div>
+              <div class="progress-item progress-item-bottom">
+                <h3>Задания:</h3>
+                <div class="progress-ring" id="tasks-ring">
+                  <div class="progress-center">
+                    <span class="progress-caption">Completed</span>
+                    <strong id="tasks-percent">-</strong>
+                  </div>
+                </div>
+              </div>
+              <p class="statistics-message" id="statistics-message" role="status" hidden></p>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+  </main>
+</body>
+</html>

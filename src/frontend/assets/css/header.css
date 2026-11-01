@@ -36,6 +36,25 @@
   display: flex;
   justify-content: flex-end;
   gap: 12px;
+  align-items: center;
+  min-width: 0;
+  visibility: hidden;
+}
+
+.account-name {
+  max-width: 240px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 20px;
+}
+
+.account-name:hover {
+  text-decoration: underline;
+}
+
+.account.account-ready {
+  visibility: visible;
 }
 
 @media (max-width: 800px) {
@@ -60,7 +79,8 @@
     gap: 28px;
   }
 
-  .navigation a {
+  .navigation a,
+  .account-name {
     font-size: 18px;
   }
 
@@ -86,5 +106,9 @@
 
   .account {
     gap: 8px;
+  }
+
+  .account-name {
+    max-width: 170px;
   }
 }

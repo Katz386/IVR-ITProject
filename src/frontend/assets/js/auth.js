@@ -56,7 +56,8 @@ async function sendForm(event) {
             message.textContent = 'Что-то пошло не так. Попробуйте позже';
             return;
         }
-
+        
+        localStorage.removeItem('profileName');
         localStorage.setItem('token', result.token);
 
         form.elements.password.value = '';
