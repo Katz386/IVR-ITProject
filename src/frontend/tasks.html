@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>28web - Задания</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anonymous+Pro:wght@400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="stylesheet" href="/assets/css/header.css">
+  <link rel="stylesheet" href="/assets/css/tasks.css">
+  
+  <script src="/assets/js/header.js" defer></script>
+  <script src="/assets/js/tasks.js" defer></script>
+</head>
+<body>
+  <header class="header">
+    <a class="logo" href="/">28web</a>
+
+    <nav class="navigation">
+      <a class="navigation-current" href="/tasks">задания</a>
+      <a href="/articles">статьи</a>
+      <a href="/materials">др. материалы</a>
+    </nav>
+    
+    <div class="account" id="account">
+      <a class="button button-light" href="/sign-in">Войти</a>
+      <a class="button button-dark" href="/sign-up">Регистрация</a>
+    </div>
+  </header>
+
+  <main class="tasks-page">
+    <div class="tasks-heading">
+      <h1>Задания</h1>
+    </div>
+
+    <form class="tasks-filters" id="tasks-filters">
+      <div class="tasks-search">
+        <label for="search">Поиск по названию</label>
+        <input id="search" name="search" type="search" maxlength="150" placeholder="Найти задание...">
+      </div>
+
+      <div class="tasks-filter-row">
+        <div class="tasks-filter">
+          <label for="difficulty">Сложность</label>
+          <select id="difficulty" name="difficulty">
+            <option value="">Любая</option>
+            <option value="easy">Easy</option>
+            <option value="medium">Medium</option>
+            <option value="hard">Hard</option>
+          </select>
+        </div>
+
+        <div class="tasks-filter">
+          <label for="topic">Тема</label>
+          <input id="topic" name="topic" type="text" maxlength="200" placeholder="Название темы">
+        </div>
+
+        <div class="tasks-filter">
+          <label for="sort">Сортировка</label>
+          <select id="sort" name="sort">
+            <option value="newest">Сначала новые</option>
+            <option value="oldest">Сначала старые</option>
+            <option value="easy">Сначала лёгкие</option>
+            <option value="hard">Сначала сложные</option>
+            <option value="order">По порядку</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="tasks-filter-actions">
+        <label class="tasks-checkbox" for="hide-solved">
+          <input id="hide-solved" name="hideSolved" type="checkbox" disabled>
+          Скрыть решенные
+        </label>
+        <div class="tasks-actions">
+          <button class="button button-dark" id="reset-filters" type="button">Сбросить</button>
+          <button class="button button-light" type="submit">Найти</button>
+        </div>
+      </div>
+    </form>
+
+    <div class="tasks-list" id="tasks-rows"></div>
+
+    <div class="tasks-state" id="tasks-state">
+      <p id="tasks-message" role="status">Загрузка заданий...</p>
+      <div id="retry-actions" hidden>
+        <button class="button button-dark" id="retry-tasks" type="button">Повторить</button>
+      </div>
+    </div>
+
+    <div class="tasks-pagination">
+      <p id="page-number">Страница 1</p>
+      <div class="tasks-actions">
+        <button class="button button-dark" id="previous-page" type="button" disabled>Назад</button>
+        <button class="button button-dark" id="next-page" type="button" disabled>Далее</button>
+      </div>
+    </div>
+  </main>
+</body>
+</html>

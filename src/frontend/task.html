@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>28web - Задание</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anonymous+Pro:wght@400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="stylesheet" href="/assets/css/header.css">
+  <link rel="stylesheet" href="/assets/css/task.css">
+
+  <script src="/assets/js/header.js" defer></script>
+  <script src="/assets/js/task.js" defer></script>
+  <script src="/assets/js/lib/marked.min.js" defer></script>
+  <script src="/assets/js/lib/purify.min.js" defer></script>
+</head>
+<body>
+  <header class="header">
+    <a class="logo" href="/">28web</a>
+
+    <nav class="navigation">
+      <a href="/tasks">задания</a>
+      <a href="/articles">статьи</a>
+      <a href="/materials">др. материалы</a>
+    </nav>
+
+    <div class="account" id="account">
+      <a class="button button-light" href="/sign-in">Войти</a>
+      <a class="button button-dark" href="/sign-up">Регистрация</a>
+    </div>
+  </header>
+
+  <main class="task-page">
+    <a class="task-back" href="/tasks">← Назад</a>
+    <p class="task-message" id="task-message" role="status">Загрузка задания...</p>
+    <div id="task-retry-actions" hidden>
+      <button class="button button-dark" id="task-retry" type="button">Повторить</button>
+    </div>
+
+    <div id="task-content" hidden>
+      <div class="task-layout">
+        <div class="task-left">
+          <div class="task-heading">
+            <h1 id="task-name"></h1>
+            <span class="task-difficulty" id="task-difficulty"></span>
+          </div>
+          <p class="task-created">Дата создания: <span id="task-created"></span></p>
+          <p class="task-solved" id="task-solved" hidden>Задание решено</p>
+
+          <section class="task-panel task-download-panel">
+            <h2>Файлы задания</h2>
+            <p>Скачайте архив и распакуйте его в папку. Внутри архива лежат файлы для запуска уязвимого приложения. ПОСЛЕ РЕШЕНИЯ УДАЛИТЕ КОНТЕЙНЕРЫ ПО ИНСТРУКЦИИ!!!</p>
+            <div id="task-download-actions" hidden>
+              <a class="button button-light task-download" id="task-download" download>Скачать архив</a>
+            </div>
+            <p class="task-note" id="task-file-message" hidden>К заданию не прикреплен файл</p>
+          </section>
+
+          <section class="task-panel">
+            <h2>Отправить флаг</h2>
+            <form id="flag-form">
+              <div class="flag-controls">
+                <input id="flag" name="flag" type="text" maxlength="500" placeholder="flag{...}" autocomplete="off" required>
+                <button class="button button-light" id="flag-submit" type="submit">Проверить</button>
+              </div>
+            </form>
+            <p class="flag-message" id="flag-message" role="status" hidden></p>
+            <p class="task-note" id="task-save-note">Войдите, чтобы решение учитывалось в профиле</p>
+          </section>
+
+          <section class="task-panel" id="task-hints-panel" hidden>
+            <div class="task-hints-heading">
+              <h2 id="task-hints-title">Подсказки</h2>
+              <div id="task-hint-actions">
+                <button class="button button-dark" id="show-hint" type="button">Открыть подсказку</button>
+              </div>
+            </div>
+            <div id="task-hints"></div>
+            <div class="task-solution-actions" id="task-solution-actions" hidden>
+              <button class="button button-dark" id="show-solution" type="button">Посмотреть решение</button>
+            </div>
+            <div class="markdown task-solution" id="task-solution" hidden></div>
+          </section>
+        </div>
+
+        <div class="task-right">
+          <section class="task-description-section">
+            <h2>Описание</h2>
+            <div class="task-panel">
+              <p class="task-description" id="task-description"></p>
+            </div>
+          </section>
+
+          <section class="task-description-section">
+            <h2>Инструкция</h2>
+            <div class="task-panel">
+              <div class="markdown" id="task-instructions">Загрузка инструкции...</div>
+              <div id="instruction-retry-actions" hidden>
+                <button class="button button-dark" id="instruction-retry" type="button">Повторить загрузку</button>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+  </main>
+</body>
+</html>
