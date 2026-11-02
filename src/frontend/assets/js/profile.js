@@ -181,7 +181,12 @@ function showRing(name, percent) {
     const ring = document.querySelector('#' + name + '-ring');
     const text = document.querySelector('#' + name + '-percent');
 
-    ring.style.background = 'conic-gradient(var(--color-easy) ' + percent + '%, var(--color-white) 0%)';
+    if (percent >= 100) {
+        ring.style.background = 'var(--color-easy)';
+    } else {
+        ring.style.background = 'conic-gradient(var(--color-easy) ' + percent + '%, var(--color-white) 0%)';
+    }
+
     text.textContent = percent + '%';
 }
 
