@@ -44,8 +44,10 @@ public static class Program
 
         app.MapControllers();
 
-        app.Run();
+        await app.StartAsync();
 
         await AdminSeeder.SeedAdminAsync(app.Services, builder.Configuration);
+
+        await app.WaitForShutdownAsync();
     }
 }
