@@ -5,7 +5,7 @@ loadMaterials();
 
 async function loadMaterials() {
     try {
-        let response = await fetch('/assets/md/materials.md');
+        let response = await fetch('/api/files/static_storage/materials');
 
         if (!response.ok) {
             message.textContent = 'Не удалось загрузить материалы';

@@ -29,6 +29,22 @@ namespace TasksService.WebApi.Controllers
             return StatusCode(response.Status, response);
         }
 
+        [HttpGet("static_storage/materials")]
+        public async Task<IActionResult> Getmaterials()
+        {
+            var path = "/app/static_storage/markdown/materials.md";
+
+            if (!System.IO.File.Exists(path))
+            {
+                Console.WriteLine($"'{path}' is missing!");
+                return StatusCode(404, "Materials file not found");
+            }
+
+            var markdown = await System.IO.File.ReadAllTextAsync(path);
+
+            return Content(markdown, "text/markdown; charset=utf-8");
+        }
+
         [HttpGet]
         public async Task<IActionResult> GetTasks([FromQuery] GetTasksRequest request)
         {

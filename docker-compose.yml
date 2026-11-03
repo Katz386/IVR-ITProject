@@ -139,6 +139,7 @@ services:
       FileService_MountVolume: ${FileService_MountVolume}
     volumes:
     - ${FileService_MountVolume}:${FileService_Storage}
+    - ./src/static_storage:/app/static_storage
   authservice:
     build:
       context: .
