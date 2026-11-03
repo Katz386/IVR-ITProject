@@ -18,9 +18,9 @@ namespace ArticlesService.WebApi.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetArticles([FromQuery] int page)
+        public async Task<IActionResult> GetArticles([FromQuery] GetArticlesRequest request)
         {
-            var response = await _articlesService.GetArticles(page);
+            var response = await _articlesService.GetArticles(request);
 
             if (response == null)
                 return StatusCode(500, new { Message = "Unhandled internal error", Status = 500 });

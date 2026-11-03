@@ -14,12 +14,14 @@ namespace ArticlesService.Application.DTOs.Request
         public string ImageUrl { get; set; }
         [MaxLength(200, ErrorMessage = "Too long")]
         [Required(ErrorMessage = "Required field is missing")]
+        [RegularExpression(@"\A[a-zA-Z\dа-яА-ЯёЁ _=+.,!?-]+\z", ErrorMessage = "Bad title")]
         public string Title { get; set; }
         [MaxLength(1000, ErrorMessage = "Too long")]
         [Required(ErrorMessage = "Required field is missing")]
         public string Description { get; set; }
         [MaxLength(400, ErrorMessage = "Too long")]
         [Required(ErrorMessage = "Required field is missing")]
+        [RegularExpression(@"\A[a-zA-Z\dа-яА-ЯёЁ _=+.,!?-]+\z", ErrorMessage = "Bad topic")]
         public string Topic { get; set; }
         [Required(ErrorMessage = "Required field is missing")]
         public string Markdown { get; set; }

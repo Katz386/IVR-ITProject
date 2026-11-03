@@ -13,7 +13,7 @@ namespace ArticlesService.Application.Interfaces
     {
         public Task<GetArticleResponse> GetArticleById(string id);
         public Task<GetArticlePreviewResponse> GetArticlePreviewById(string id);
-        public Task<GetArticlesListResponse> GetArticles(int page);
+        public Task<GetArticlesListResponse> GetArticles(GetArticlesRequest request);
         public Task<DeleteArticleResponse> DeleteArticle(string id);
         public Task<EditArticleResponse> EditArticle(EditArticleRequest request, string id);
         public Task<AddArticleResponse> AddArticle(AddArticleRequest request);

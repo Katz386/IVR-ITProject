@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace ArticlesService.Application.Services
@@ -136,16 +137,28 @@ namespace ArticlesService.Application.Services
             return new GetArticlePreviewResponse { Article = article, Message = "Success", Status = 200 };
         }
 
-        public async Task<GetArticlesListResponse> GetArticles(int page)
+        public async Task<GetArticlesListResponse> GetArticles(GetArticlesRequest request)
         {
             try
             {
                 int pageSize = 16;
 
-                if (page <= 0 || page > 4000)
+                if (request.page <= 0 || request.page > 4000)
                     return new GetArticlesListResponse { Message = "Invalid article id", Status = 400 };
 
-                var articles = await _articlesRepository.GetArticles(page, pageSize);
+                if (!Enum.IsDefined(request.sortBy))
+                    return new GetArticlesListResponse { Message = "Invalid sort type", Status = 400 };
+
+                if (!string.IsNullOrEmpty(request.search) && !Regex.IsMatch(request.search, @"\A[a-zA-Z\dа-яА-ЯёЁ _=+.,!?-]+\z"))
+                    return new GetArticlesListResponse { Message = "Bad search query", Status = 400 };
+
+                if (!string.IsNullOrEmpty(request.topic) && (!Regex.IsMatch(request.topic, @"\A[a-zA-Z\dа-яА-ЯёЁ _=+.,!?-]+\z") || request.topic.Length > 200))
+                    return new GetArticlesListResponse { Message = "Invalid topic", Status = 400 };
+
+                if (!string.IsNullOrEmpty(request.readArticles) && !Regex.IsMatch(request.readArticles, @"\A[\d,-]+\z"))
+                    return new GetArticlesListResponse { Message = "Invalid read articles", Status = 400 };
+
+                var articles = await _articlesRepository.GetArticles(request, pageSize);
 
                 if (articles == null || articles.Count <= 0)
                     return new GetArticlesListResponse { Message = "No articles mathcing the request", Status = 404 };
@@ -155,7 +168,7 @@ namespace ArticlesService.Application.Services
             }
             catch
             {
-                Console.WriteLine("Internal error during GetArticles");
+                Console.WriteLine("Internal error in GetArticles");
                 return new GetArticlesListResponse { Message = "Internal error", Status = 500 };
             }
         }
