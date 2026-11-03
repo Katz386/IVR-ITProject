@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>28web - Другие материалы</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anonymous+Pro:wght@400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="stylesheet" href="/assets/css/header.css">
+  <link rel="stylesheet" href="/assets/css/materials.css">
+
+  <script src="/assets/js/header.js" defer></script>
+  <script src="/assets/js/lib/marked.min.js" defer></script>
+  <script src="/assets/js/lib/purify.min.js" defer></script>
+  
+  <script src="/assets/js/materials.js" defer></script>
+</head>
+<body>
+  <header class="header">
+    <a class="logo" href="/">28web</a>
+
+    <nav class="navigation">
+      <a href="/tasks">задания</a>
+      <a href="/articles">статьи</a>
+      <a class="navigation-current" href="/materials">др. материалы</a>
+    </nav>
+
+    <div class="account" id="account">
+      <a class="button button-light" href="/sign-in">Войти</a>
+      <a class="button button-dark" href="/sign-up">Регистрация</a>
+    </div>
+  </header>
+
+  <main class="materials-page">
+    <h1>Другие материалы</h1>
+    <p class="materials-message" id="materials-message">Загрузка материалов...</p>
+    <div class="materials-panel markdown" id="materials-content" hidden></div>
+  </main>
+</body>
+</html>
