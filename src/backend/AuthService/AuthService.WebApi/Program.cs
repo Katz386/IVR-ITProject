@@ -24,6 +24,12 @@ public static class Program
 
         builder.Services.AddControllers();
 
+        builder.Services.AddOptions<MassTransitHostOptions>()
+            .Configure(options =>
+            {
+                options.WaitUntilStarted = true;
+            });
+
         var app = builder.Build();
 
         using (var scope = app.Services.CreateScope())
@@ -32,8 +38,6 @@ public static class Program
             db.Database.Migrate();
         }
 
-        await AdminSeeder.SeedAdminAsync(app.Services, builder.Configuration);
-
         app.UseForwardedHeaders();
 
         app.UseAuthorization();
@@ -41,5 +45,7 @@ public static class Program
         app.MapControllers();
 
         app.Run();
+
+        await AdminSeeder.SeedAdminAsync(app.Services, builder.Configuration);
     }
 }
