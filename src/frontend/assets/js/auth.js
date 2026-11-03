@@ -15,6 +15,15 @@ async function sendForm(event) {
         return;
     }
 
+    if (form.id === 'sign-up-form') {
+        const confirmPassword = form.elements.confirmPassword.value;
+
+        if (password !== confirmPassword) {
+            message.textContent = 'Пароли не совпадают';
+            return;
+        }
+    }
+
     let url = '/api/auth/sign-in';
 
     if (form.id === 'sign-up-form') {
