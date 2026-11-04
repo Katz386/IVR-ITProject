@@ -114,7 +114,7 @@ async function loadUnreadArticle(profile) {
             return;
         }
 
-        document.querySelector('#unread-article').href = '/article/' + result.articles[0].id;
+        document.querySelector('#read-next-article').href ='/article/' + result.articles[0].id;
 
         actions.hidden = false;
     } catch (error) {
