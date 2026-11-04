@@ -1,9 +1,32 @@
 ![Alt Text](assets/banner.gif)
 
-text text text
+28web is an educational web platform that provides CTF tasks, articles about cyber security and progress tracking features.
 
-:)
+The project is designed around a microservice-based backend. Each service owns a specific part of the platform, while Nginx provides a single public entry point for the static frontend and backend APIs
 
+##
+
+>**[!IMPORTANT]**
+> 28web is an educational project. Run downloadable challenge environments only in an isolated > environment that you own or are explicitly authorized to use. Stop and remove challenge containers when you have finished working with them
+
+Project diagram:
+
+![Alt Text](assets/diagram2.png)
+
+## Features
+
+Practical security challenges
+
+Learning materials
+
+Profile and statistics
+
+## Screenshots
+
+![Alt Text](assets/screen1.png)
+![Alt Text](assets/screen2.png)
+![Alt Text](assets/screen3.png)
+![Alt Text](assets/screen4.png)
 ## License
 
 Copyright (c) 2026 Anton S.
