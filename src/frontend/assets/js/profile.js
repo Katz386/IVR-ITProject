@@ -1,3 +1,9 @@
+document.querySelector('#logout').addEventListener('click', () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('profileName');
+    window.location.href = '/';
+});
+
 loadProfile();
 
 async function loadProfile() {
@@ -70,6 +76,10 @@ async function loadProfile() {
         message.textContent = '';
         message.hidden = true;
         document.querySelector('#profile-data').hidden = false;
+
+        if (id === 'me') {
+            document.querySelector('#logout').hidden = false;
+        }
 
         await loadProgress(profile);
         await loadLastTask(profile);

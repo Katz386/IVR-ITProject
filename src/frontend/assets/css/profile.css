@@ -18,6 +18,13 @@
   right: -172px;
 }
 
+.profile-name-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
 .profile-art-left {
   width: 703px;
   left: -160px;
