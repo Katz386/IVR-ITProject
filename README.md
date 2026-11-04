@@ -1,3 +1,9 @@
+![Alt Text](assets/banner.gif)
+
+text text text
+
+:)
+
 ## License
 
 Copyright (c) 2026 Anton S.
