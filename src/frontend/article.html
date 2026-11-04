@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>28web - Статья</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anonymous+Pro:wght@400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="stylesheet" href="/assets/css/header.css">
+  <link rel="stylesheet" href="/assets/css/article.css">
+
+  <script src="/assets/js/header.js" defer></script>
+  <script src="/assets/js/lib/marked.min.js" defer></script>
+  <script src="/assets/js/lib/purify.min.js" defer></script>
+  <script src="/assets/js/article.js" defer></script>
+</head>
+
+<body>
+  <header class="header">
+    <a class="logo" href="/">28web</a>
+
+    <nav class="navigation">
+      <a href="/tasks">задания</a>
+      <a href="/articles">статьи</a>
+      <a href="/materials">др. материалы</a>
+    </nav>
+
+    <div class="account" id="account">
+      <a class="button button-light" href="/sign-in">Войти</a>
+      <a class="button button-dark" href="/sign-up">Регистрация</a>
+    </div>
+  </header>
+
+  <main class="article-page">
+    <a class="article-back" href="/articles">← Назад</a>
+    <p class="article-message" id="article-message">Загрузка статьи...</p>
+    <div id="article-retry-actions" hidden>
+      <button class="button button-dark" id="article-retry" type="button">Повторить</button>
+    </div>
+
+    <div id="article-content" hidden>
+      <h1 id="article-title"></h1>
+      <p class="article-details"><span id="article-topic"></span> · <span id="article-created"></span></p>
+      <div class="article-panel markdown" id="article-markdown"></div>
+
+      <div class="article-footer">
+        <div>
+          <button class="button button-light" id="read-article" type="button" disabled>Отметить прочитанной</button>
+          <p class="article-note" id="read-message">Подождите...</p>
+          <div id="article-login-actions" hidden>
+            <a class="article-login" href="/sign-in">Войти в аккаунт</a>
+          </div>
+        </div>
+        <div id="next-article-actions" hidden>
+          <a class="button button-dark" id="next-article">Следующая статья</a>
+        </div>
+      </div>
+      <p class="article-note" id="next-message">Поиск следующей статьи...</p>
+    </div>
+  </main>
+</body>
+</html>

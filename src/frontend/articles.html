@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>28web - Статьи</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anonymous+Pro:wght@400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="stylesheet" href="/assets/css/header.css">
+  <link rel="stylesheet" href="/assets/css/articles.css">
+
+  <script src="/assets/js/header.js" defer></script>
+  <script src="/assets/js/articles.js" defer></script>
+</head>
+
+<body>
+  <header class="header">
+    <a class="logo" href="/">28web</a>
+
+    <nav class="navigation">
+      <a href="/tasks">задания</a>
+      <a class="navigation-current" href="/articles">статьи</a>
+      <a href="/materials">др. материалы</a>
+    </nav>
+
+    <div class="account" id="account">
+      <a class="button button-light" href="/sign-in">Войти</a>
+      <a class="button button-dark" href="/sign-up">Регистрация</a>
+    </div>
+  </header>
+
+  <main class="articles-page">
+    <div class="articles-heading">
+      <h1>Статьи</h1>
+    </div>
+
+    <form class="articles-filters" id="articles-filters">
+      <div class="articles-search">
+        <label for="search">Поиск по названию</label>
+        <input id="search" name="search" type="search" maxlength="150" placeholder="Найти статью...">
+      </div>
+
+      <div class="articles-filter-row">
+        <div class="articles-filter">
+          <label for="topic">Тема</label>
+          <input id="topic" name="topic" type="text" maxlength="150" placeholder="Название темы">
+        </div>
+
+        <div class="articles-filter">
+          <label for="sort">Сортировка</label>
+          <select id="sort" name="sort">
+            <option value="newest">Сначала новые</option>
+            <option value="oldest">Сначала старые</option>
+            <option value="order">По порядку</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="articles-filter-actions">
+        <label class="articles-checkbox" for="hide-read">
+          <input id="hide-read" name="hideRead" type="checkbox" disabled>
+          Скрыть прочитанные
+        </label>
+        <div class="articles-actions">
+          <button class="button button-dark" id="reset-filters" type="button">Сбросить</button>
+          <button class="button button-light" type="submit">Найти</button>
+        </div>
+      </div>
+    </form>
+
+    <div class="articles-list" id="articles-rows"></div>
+
+    <div class="articles-state" id="articles-state">
+      <p id="articles-message">Загрузка статей...</p>
+      <div id="retry-actions" hidden>
+        <button class="button button-dark" id="retry-articles" type="button">Повторить</button>
+      </div>
+    </div>
+
+    <div class="articles-pagination">
+      <p id="page-number">Страница 1</p>
+      <div class="articles-actions">
+        <button class="button button-dark" id="previous-page" type="button" disabled>Назад</button>
+        <button class="button button-dark" id="next-page" type="button" disabled>Далее</button>
+      </div>
+    </div>
+  </main>
+</body>
+</html>
