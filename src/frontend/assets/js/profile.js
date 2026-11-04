@@ -79,6 +79,7 @@ async function loadProfile() {
 
         if (id === 'me') {
             document.querySelector('#logout').hidden = false;
+            await loadUnreadArticle(profile);
         }
 
         await loadProgress(profile);
@@ -86,6 +87,38 @@ async function loadProfile() {
     } catch (error) {
         message.textContent = 'Не удалось получить профиль';
         message.hidden = false;
+    }
+}
+
+async function loadUnreadArticle(profile) {
+    let actions = document.querySelector('#unread-article-actions');
+    actions.hidden = true;
+
+    let params = new URLSearchParams();
+    params.set('page', '1');
+    params.set('sortBy', '0');
+    params.set('sortDescending', 'false');
+    params.set('hideRead', 'true');
+    params.set('readArticles', profile.articlesRead || '');
+
+    try {
+        const response = await fetch('/api/articles/?' + params.toString());
+
+        if (!response.ok) {
+            return;
+        }
+
+        const result = await response.json();
+
+        if (!Array.isArray(result.articles) || result.articles.length === 0) {
+            return;
+        }
+
+        document.querySelector('#unread-article').href = '/article/' + result.articles[0].id;
+
+        actions.hidden = false;
+    } catch (error) {
+        actions.hidden = true;
     }
 }
 

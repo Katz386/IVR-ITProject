@@ -12,6 +12,14 @@
   pointer-events: none;
 }
 
+.profile-actions {
+  margin-top: 25px;
+}
+
+.profile-actions .button {
+  white-space: normal;
+}
+
 .profile-art-right {
   width: 885px;
   top: -130px;
