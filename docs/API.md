@@ -7,7 +7,7 @@
 - [The services inside Docker](#the-services-inside-docker)
 - [Data ownership](#data-ownership)
 - [Asynchronous events](#asynchronous-events)
-- [Request and event flows](#request-and-event-flows)
+- [Requests and event flows](#requests-and-event-flows)
 
 
 ## Diagram
