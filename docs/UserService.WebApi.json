@@ -1,0 +1,770 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "UserService.WebApi | v1",
+    "version": "1.0.0",
+    "description": "28web UserService API reference"
+  },
+  "paths": {
+    "/api/users/profile/{id}": {
+      "get": {
+        "tags": [
+          "UserService"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Example successful response (illustrative).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetProfileResponse"
+                },
+                "example": {
+                  "message": "Success",
+                  "status": 200,
+                  "profile": {
+                    "id": "b5c4724b-8f9e-4f9e-9a3e-a5a3fbc41d29",
+                    "name": "example_user",
+                    "tasksSolved": "7,9",
+                    "articlesRead": "3",
+                    "articlesReadCount": 1,
+                    "easyTasksSolvedCount": 2,
+                    "mediumTasksSolvedCount": 0,
+                    "hardTasksSolvedCount": 0,
+                    "isPrivate": false,
+                    "lastActivity": "2026-10-18T10:00:00Z",
+                    "lastTaskSolvedDate": "2026-10-18T09:00:00Z",
+                    "lastTaskSolvedId": 9,
+                    "created": "2026-09-01T08:00:00Z"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Private profile",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "message": "Private profile"
+                }
+              }
+            }
+          }
+        },
+        "description": "**Response examples are illustrative** and reflect the source model shape rather than actual recorded traffic."
+      }
+    },
+    "/api/users/profile/me": {
+      "get": {
+        "tags": [
+          "UserService"
+        ],
+        "responses": {
+          "200": {
+            "description": "Example successful response (illustrative).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetProfileResponse"
+                },
+                "example": {
+                  "message": "Success",
+                  "status": 200,
+                  "profile": {
+                    "id": "b5c4724b-8f9e-4f9e-9a3e-a5a3fbc41d29",
+                    "name": "example_user",
+                    "tasksSolved": "7,9",
+                    "articlesRead": "3",
+                    "articlesReadCount": 1,
+                    "easyTasksSolvedCount": 2,
+                    "mediumTasksSolvedCount": 0,
+                    "hardTasksSolvedCount": 0,
+                    "isPrivate": false,
+                    "lastActivity": "2026-10-18T10:00:00Z",
+                    "lastTaskSolvedDate": "2026-10-18T09:00:00Z",
+                    "lastTaskSolvedId": 9,
+                    "created": "2026-09-01T08:00:00Z"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "**Response examples are illustrative** and reflect the source model shape rather than actual recorded traffic.",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/users/profile/articles": {
+      "post": {
+        "tags": [
+          "UserService"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReadArticleRequest"
+              },
+              "example": {
+                "id": 3
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReadArticleRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReadArticleRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Example successful response (illustrative).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReadArticleResponse"
+                },
+                "example": {
+                  "message": "Article marked as read",
+                  "status": 200
+                }
+              }
+            }
+          }
+        },
+        "description": "**Response examples are illustrative** and reflect the source model shape rather than actual recorded traffic.",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/users/profile": {
+      "post": {
+        "tags": [
+          "UserService"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EditProfileRequest"
+              },
+              "example": {
+                "name": "example_user",
+                "isPrivate": false
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EditProfileRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/EditProfileRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Example successful response (illustrative).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EditProfileResponse"
+                },
+                "example": {
+                  "message": "Profile updated",
+                  "status": 200,
+                  "profile": {
+                    "id": "b5c4724b-8f9e-4f9e-9a3e-a5a3fbc41d29",
+                    "name": "example_user",
+                    "tasksSolved": "7,9",
+                    "articlesRead": "3",
+                    "articlesReadCount": 1,
+                    "easyTasksSolvedCount": 2,
+                    "mediumTasksSolvedCount": 0,
+                    "hardTasksSolvedCount": 0,
+                    "isPrivate": false,
+                    "lastActivity": "2026-10-18T10:00:00Z",
+                    "lastTaskSolvedDate": "2026-10-18T09:00:00Z",
+                    "lastTaskSolvedId": 9,
+                    "created": "2026-09-01T08:00:00Z"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "**Response examples are illustrative** and reflect the source model shape rather than actual recorded traffic.",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "EditProfileRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "maxLength": 150,
+            "type": "string",
+            "nullable": true
+          },
+          "isPrivate": {
+            "type": "boolean",
+            "nullable": true
+          }
+        }
+      },
+      "ReadArticleRequest": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "maximum": 2000000,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "Profile": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "tasksSolved": {
+            "type": "string"
+          },
+          "articlesRead": {
+            "type": "string"
+          },
+          "articlesReadCount": {
+            "type": "integer"
+          },
+          "easyTasksSolvedCount": {
+            "type": "integer"
+          },
+          "mediumTasksSolvedCount": {
+            "type": "integer"
+          },
+          "hardTasksSolvedCount": {
+            "type": "integer"
+          },
+          "isPrivate": {
+            "type": "boolean"
+          },
+          "lastActivity": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "lastTaskSolvedDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "lastTaskSolvedId": {
+            "type": "integer"
+          },
+          "created": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "Article": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "imageUrl": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "topic": {
+            "type": "string"
+          },
+          "markdown": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "sortOrder": {
+            "type": "integer"
+          }
+        }
+      },
+      "ArticlePreview": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "imageUrl": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "topic": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "WebTask": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "topic": {
+            "type": "string"
+          },
+          "file": {
+            "type": "string"
+          },
+          "difficulty": {
+            "type": "string"
+          },
+          "hints": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "solution": {
+            "type": "string"
+          },
+          "created": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "sortOrder": {
+            "type": "integer"
+          }
+        }
+      },
+      "WebTaskPreview": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "topic": {
+            "type": "string"
+          },
+          "difficulty": {
+            "type": "string"
+          },
+          "created": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "PlatformStatistics": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "easyTasksCount": {
+            "type": "integer"
+          },
+          "mediumTasksCount": {
+            "type": "integer"
+          },
+          "hardTasksCount": {
+            "type": "integer"
+          },
+          "articlesCount": {
+            "type": "integer"
+          },
+          "usersCount": {
+            "type": "integer"
+          }
+        }
+      },
+      "FileRecord": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string"
+          }
+        }
+      },
+      "GetProfileResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "profile": {
+            "$ref": "#/components/schemas/Profile"
+          }
+        }
+      },
+      "EditProfileResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "profile": {
+            "$ref": "#/components/schemas/Profile"
+          }
+        }
+      },
+      "ReadArticleResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "GetArticleResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "article": {
+            "$ref": "#/components/schemas/Article"
+          }
+        }
+      },
+      "GetArticlePreviewResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "article": {
+            "$ref": "#/components/schemas/ArticlePreview"
+          }
+        }
+      },
+      "GetArticlesListResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "articles": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ArticlePreview"
+            }
+          }
+        }
+      },
+      "AddArticleResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "article": {
+            "$ref": "#/components/schemas/Article"
+          }
+        }
+      },
+      "EditArticleResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "article": {
+            "$ref": "#/components/schemas/Article"
+          }
+        }
+      },
+      "DeleteArticleResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "article": {
+            "$ref": "#/components/schemas/Article"
+          }
+        }
+      },
+      "GetTaskResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "task": {
+            "$ref": "#/components/schemas/WebTask"
+          }
+        }
+      },
+      "GetTasksListResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "tasks": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WebTaskPreview"
+            }
+          }
+        }
+      },
+      "CreateTaskResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "task": {
+            "$ref": "#/components/schemas/WebTask"
+          }
+        }
+      },
+      "EditTaskResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "task": {
+            "$ref": "#/components/schemas/WebTask"
+          }
+        }
+      },
+      "DeleteTaskResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "task": {
+            "$ref": "#/components/schemas/WebTask"
+          }
+        }
+      },
+      "SolveTaskResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "task": {
+            "$ref": "#/components/schemas/WebTask"
+          }
+        }
+      },
+      "GetStatisticsResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "statistics": {
+            "$ref": "#/components/schemas/PlatformStatistics"
+          }
+        }
+      },
+      "GetFileRecordResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "file": {
+            "$ref": "#/components/schemas/FileRecord"
+          }
+        }
+      },
+      "UploadFileResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "fileRecord": {
+            "$ref": "#/components/schemas/FileRecord"
+          }
+        }
+      },
+      "AuthResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "token": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "BearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "UserService"
+    }
+  ]
+}

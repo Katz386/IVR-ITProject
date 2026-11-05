@@ -1,0 +1,1044 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "TasksService.WebApi | v1",
+    "version": "1.0.0",
+    "description": "28web TasksService API reference"
+  },
+  "paths": {
+    "/api/tasks/{id}": {
+      "get": {
+        "tags": [
+          "Tasks"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Example successful response (illustrative).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetTaskResponse"
+                },
+                "example": {
+                  "message": "Success",
+                  "status": 200,
+                  "task": {
+                    "id": 7,
+                    "name": "HTTP Headers",
+                    "description": "Inspect an HTTP response and identify the requested header.",
+                    "topic": "Web Fundamentals",
+                    "file": "",
+                    "difficulty": "Easy",
+                    "hints": [
+                      "Inspect the response headers."
+                    ],
+                    "solution": "Review HTTP response metadata.",
+                    "created": "2026-10-16T10:30:00Z",
+                    "sortOrder": 1
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "**Response examples are illustrative** and reflect the source model shape rather than actual recorded traffic."
+      },
+      "delete": {
+        "tags": [
+          "Tasks"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Example successful response (illustrative).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteTaskResponse"
+                },
+                "example": {
+                  "message": "Challenge deleted",
+                  "status": 200
+                }
+              }
+            }
+          }
+        },
+        "description": "**Response examples are illustrative** and reflect the source model shape rather than actual recorded traffic.",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "Tasks"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EditTaskRequest"
+              },
+              "example": {
+                "description": "Updated challenge description."
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EditTaskRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/EditTaskRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Example successful response (illustrative).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EditTaskResponse"
+                },
+                "example": {
+                  "message": "Challenge updated",
+                  "status": 200,
+                  "task": {
+                    "id": 7,
+                    "name": "HTTP Headers",
+                    "description": "Inspect an HTTP response and identify the requested header.",
+                    "topic": "Web Fundamentals",
+                    "file": "",
+                    "difficulty": "Easy",
+                    "hints": [
+                      "Inspect the response headers."
+                    ],
+                    "solution": "Review HTTP response metadata.",
+                    "created": "2026-10-16T10:30:00Z",
+                    "sortOrder": 1
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "**Response examples are illustrative** and reflect the source model shape rather than actual recorded traffic.",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/tasks/": {
+      "get": {
+        "tags": [
+          "Tasks"
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "maximum": 100000,
+              "minimum": 1,
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "search",
+            "in": "query",
+            "schema": {
+              "maxLength": 150,
+              "type": "string"
+            }
+          },
+          {
+            "name": "difficulty",
+            "in": "query",
+            "schema": {
+              "maxLength": 150,
+              "type": "string"
+            }
+          },
+          {
+            "name": "topic",
+            "in": "query",
+            "schema": {
+              "maxLength": 150,
+              "type": "string"
+            }
+          },
+          {
+            "name": "hideSolved",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "solvedTasks",
+            "in": "query",
+            "schema": {
+              "maxLength": 10000,
+              "type": "string"
+            }
+          },
+          {
+            "name": "sortBy",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "sortDescending",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Example successful response (illustrative).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetTasksListResponse"
+                },
+                "example": {
+                  "message": "Success",
+                  "status": 200,
+                  "tasks": [
+                    {
+                      "id": 7,
+                      "name": "HTTP Headers",
+                      "description": "Inspect an HTTP response and identify the requested header.",
+                      "topic": "Web Fundamentals",
+                      "difficulty": "Easy",
+                      "created": "2026-10-16T10:30:00Z"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "description": "**Response examples are illustrative** and reflect the source model shape rather than actual recorded traffic."
+      },
+      "post": {
+        "tags": [
+          "Tasks"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateTaskRequest"
+              },
+              "example": {
+                "name": "HTTP Headers",
+                "description": "Inspect response headers.",
+                "flag": "<example-flag>",
+                "topic": "Web Fundamentals",
+                "file": "",
+                "difficulty": "Easy",
+                "hints": [
+                  "Inspect HTTP response headers."
+                ],
+                "solution": "Review the response metadata.",
+                "sortOrder": 1
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateTaskRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateTaskRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Example successful response (illustrative).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateTaskResponse"
+                },
+                "example": {
+                  "message": "Challenge created",
+                  "status": 200,
+                  "task": {
+                    "id": 7,
+                    "name": "HTTP Headers",
+                    "description": "Inspect an HTTP response and identify the requested header.",
+                    "topic": "Web Fundamentals",
+                    "file": "",
+                    "difficulty": "Easy",
+                    "hints": [
+                      "Inspect the response headers."
+                    ],
+                    "solution": "Review HTTP response metadata.",
+                    "created": "2026-10-16T10:30:00Z",
+                    "sortOrder": 1
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "**Response examples are illustrative** and reflect the source model shape rather than actual recorded traffic.",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/tasks/{id}/solve": {
+      "post": {
+        "tags": [
+          "Tasks"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SolveTaskRequest"
+              },
+              "example": {
+                "flag": "<example-flag>"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SolveTaskRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SolveTaskRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Example successful response (illustrative).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SolveTaskResponse"
+                },
+                "example": {
+                  "message": "Challenge submission processed",
+                  "status": 200
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing uid in authenticated token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "message": "Missing uid field in token"
+                }
+              }
+            }
+          }
+        },
+        "description": "**Response examples are illustrative** and reflect the source model shape rather than actual recorded traffic.",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CreateTaskRequest": {
+        "required": [
+          "name",
+          "description",
+          "flag",
+          "file",
+          "difficulty",
+          "hints",
+          "solution",
+          "sortOrder"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "maxLength": 150,
+            "pattern": "\\A[a-zA-Z\\dа-яА-ЯёЁ _=+.,!?-]+\\z",
+            "type": "string"
+          },
+          "description": {
+            "maxLength": 1000,
+            "type": "string"
+          },
+          "flag": {
+            "maxLength": 500,
+            "type": "string"
+          },
+          "topic": {
+            "maxLength": 200,
+            "pattern": "\\A[a-zA-Z\\dа-яА-ЯёЁ _=+.,!?-]+\\z",
+            "type": "string"
+          },
+          "file": {
+            "maxLength": 1000,
+            "type": "string"
+          },
+          "difficulty": {
+            "maxLength": 200,
+            "type": "string"
+          },
+          "hints": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "solution": {
+            "maxLength": 10000,
+            "type": "string"
+          },
+          "sortOrder": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "EditTaskRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "maxLength": 150,
+            "pattern": "\\A[a-zA-Z\\dа-яА-ЯёЁ _=+.,!?-]+\\z",
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "maxLength": 1000,
+            "type": "string",
+            "nullable": true
+          },
+          "flag": {
+            "maxLength": 500,
+            "type": "string",
+            "nullable": true
+          },
+          "topic": {
+            "maxLength": 200,
+            "pattern": "\\A[a-zA-Z\\dа-яА-ЯёЁ _=+.,!?-]+\\z",
+            "type": "string",
+            "nullable": true
+          },
+          "file": {
+            "maxLength": 1000,
+            "type": "string",
+            "nullable": true
+          },
+          "difficulty": {
+            "maxLength": 200,
+            "type": "string",
+            "nullable": true
+          },
+          "hints": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "solution": {
+            "maxLength": 10000,
+            "type": "string",
+            "nullable": true
+          },
+          "sortOrder": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          }
+        }
+      },
+      "SolveTaskRequest": {
+        "type": "object",
+        "properties": {
+          "flag": {
+            "maxLength": 500,
+            "type": "string"
+          }
+        }
+      },
+      "Profile": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "tasksSolved": {
+            "type": "string"
+          },
+          "articlesRead": {
+            "type": "string"
+          },
+          "articlesReadCount": {
+            "type": "integer"
+          },
+          "easyTasksSolvedCount": {
+            "type": "integer"
+          },
+          "mediumTasksSolvedCount": {
+            "type": "integer"
+          },
+          "hardTasksSolvedCount": {
+            "type": "integer"
+          },
+          "isPrivate": {
+            "type": "boolean"
+          },
+          "lastActivity": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "lastTaskSolvedDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "lastTaskSolvedId": {
+            "type": "integer"
+          },
+          "created": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "Article": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "imageUrl": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "topic": {
+            "type": "string"
+          },
+          "markdown": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "sortOrder": {
+            "type": "integer"
+          }
+        }
+      },
+      "ArticlePreview": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "imageUrl": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "topic": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "WebTask": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "topic": {
+            "type": "string"
+          },
+          "file": {
+            "type": "string"
+          },
+          "difficulty": {
+            "type": "string"
+          },
+          "hints": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "solution": {
+            "type": "string"
+          },
+          "created": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "sortOrder": {
+            "type": "integer"
+          }
+        }
+      },
+      "WebTaskPreview": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "topic": {
+            "type": "string"
+          },
+          "difficulty": {
+            "type": "string"
+          },
+          "created": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "PlatformStatistics": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "easyTasksCount": {
+            "type": "integer"
+          },
+          "mediumTasksCount": {
+            "type": "integer"
+          },
+          "hardTasksCount": {
+            "type": "integer"
+          },
+          "articlesCount": {
+            "type": "integer"
+          },
+          "usersCount": {
+            "type": "integer"
+          }
+        }
+      },
+      "FileRecord": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string"
+          }
+        }
+      },
+      "GetProfileResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "profile": {
+            "$ref": "#/components/schemas/Profile"
+          }
+        }
+      },
+      "EditProfileResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "profile": {
+            "$ref": "#/components/schemas/Profile"
+          }
+        }
+      },
+      "ReadArticleResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "GetArticleResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "article": {
+            "$ref": "#/components/schemas/Article"
+          }
+        }
+      },
+      "GetArticlePreviewResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "article": {
+            "$ref": "#/components/schemas/ArticlePreview"
+          }
+        }
+      },
+      "GetArticlesListResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "articles": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ArticlePreview"
+            }
+          }
+        }
+      },
+      "AddArticleResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "article": {
+            "$ref": "#/components/schemas/Article"
+          }
+        }
+      },
+      "EditArticleResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "article": {
+            "$ref": "#/components/schemas/Article"
+          }
+        }
+      },
+      "DeleteArticleResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "article": {
+            "$ref": "#/components/schemas/Article"
+          }
+        }
+      },
+      "GetTaskResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "task": {
+            "$ref": "#/components/schemas/WebTask"
+          }
+        }
+      },
+      "GetTasksListResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "tasks": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WebTaskPreview"
+            }
+          }
+        }
+      },
+      "CreateTaskResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "task": {
+            "$ref": "#/components/schemas/WebTask"
+          }
+        }
+      },
+      "EditTaskResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "task": {
+            "$ref": "#/components/schemas/WebTask"
+          }
+        }
+      },
+      "DeleteTaskResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "task": {
+            "$ref": "#/components/schemas/WebTask"
+          }
+        }
+      },
+      "SolveTaskResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "task": {
+            "$ref": "#/components/schemas/WebTask"
+          }
+        }
+      },
+      "GetStatisticsResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "statistics": {
+            "$ref": "#/components/schemas/PlatformStatistics"
+          }
+        }
+      },
+      "GetFileRecordResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "file": {
+            "$ref": "#/components/schemas/FileRecord"
+          }
+        }
+      },
+      "UploadFileResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "fileRecord": {
+            "$ref": "#/components/schemas/FileRecord"
+          }
+        }
+      },
+      "AuthResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "token": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "BearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "Tasks"
+    }
+  ]
+}

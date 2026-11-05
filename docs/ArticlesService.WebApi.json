@@ -1,0 +1,937 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "ArticlesService.WebApi | v1",
+    "version": "1.0.0",
+    "description": "28web ArticlesService API reference"
+  },
+  "paths": {
+    "/api/articles/": {
+      "get": {
+        "tags": [
+          "Articles"
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "maximum": 100000,
+              "minimum": 1,
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "search",
+            "in": "query",
+            "schema": {
+              "maxLength": 150,
+              "type": "string"
+            }
+          },
+          {
+            "name": "topic",
+            "in": "query",
+            "schema": {
+              "maxLength": 150,
+              "type": "string"
+            }
+          },
+          {
+            "name": "hideRead",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "readArticles",
+            "in": "query",
+            "schema": {
+              "maxLength": 10000,
+              "type": "string"
+            }
+          },
+          {
+            "name": "sortBy",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "sortDescending",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Example successful response (illustrative).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetArticlesListResponse"
+                },
+                "example": {
+                  "message": "Success",
+                  "status": 200,
+                  "articles": [
+                    {
+                      "id": 3,
+                      "imageUrl": "https://example.org/assets/articles/http.png",
+                      "title": "HTTP Fundamentals",
+                      "description": "Understand HTTP requests and responses.",
+                      "topic": "Web Fundamentals",
+                      "createdAt": "2026-10-15T12:00:00Z"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "description": "**Response examples are illustrative** and reflect the source model shape rather than actual recorded traffic."
+      },
+      "post": {
+        "tags": [
+          "Articles"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddArticleRequest"
+              },
+              "example": {
+                "imageUrl": "https://example.org/assets/articles/http.png",
+                "title": "HTTP Fundamentals",
+                "description": "Understand HTTP requests and responses.",
+                "topic": "Web Fundamentals",
+                "markdown": "# HTTP Fundamentals",
+                "sortOrder": 1
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddArticleRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddArticleRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Example successful response (illustrative).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AddArticleResponse"
+                },
+                "example": {
+                  "message": "Article created",
+                  "status": 200,
+                  "article": {
+                    "id": 3,
+                    "imageUrl": "https://example.org/assets/articles/http.png",
+                    "title": "HTTP Fundamentals",
+                    "description": "Understand HTTP requests and responses.",
+                    "topic": "Web Fundamentals",
+                    "markdown": "# HTTP Fundamentals\nHTTP is a request-response protocol.",
+                    "createdAt": "2026-10-15T12:00:00Z",
+                    "sortOrder": 1
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "**Response examples are illustrative** and reflect the source model shape rather than actual recorded traffic.",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/articles/{id}": {
+      "get": {
+        "tags": [
+          "Articles"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Example successful response (illustrative).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetArticleResponse"
+                },
+                "example": {
+                  "message": "Success",
+                  "status": 200,
+                  "article": {
+                    "id": 3,
+                    "imageUrl": "https://example.org/assets/articles/http.png",
+                    "title": "HTTP Fundamentals",
+                    "description": "Understand HTTP requests and responses.",
+                    "topic": "Web Fundamentals",
+                    "markdown": "# HTTP Fundamentals\nHTTP is a request-response protocol.",
+                    "createdAt": "2026-10-15T12:00:00Z",
+                    "sortOrder": 1
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "**Response examples are illustrative** and reflect the source model shape rather than actual recorded traffic."
+      },
+      "delete": {
+        "tags": [
+          "Articles"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Example successful response (illustrative).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteArticleResponse"
+                },
+                "example": {
+                  "message": "Article deleted",
+                  "status": 200
+                }
+              }
+            }
+          }
+        },
+        "description": "**Response examples are illustrative** and reflect the source model shape rather than actual recorded traffic.",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "Articles"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EditArticleRequest"
+              },
+              "example": {
+                "title": "HTTP Fundamentals Updated"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EditArticleRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/EditArticleRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Example successful response (illustrative).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EditArticleResponse"
+                },
+                "example": {
+                  "message": "Article updated",
+                  "status": 200,
+                  "article": {
+                    "id": 3,
+                    "imageUrl": "https://example.org/assets/articles/http.png",
+                    "title": "HTTP Fundamentals",
+                    "description": "Understand HTTP requests and responses.",
+                    "topic": "Web Fundamentals",
+                    "markdown": "# HTTP Fundamentals\nHTTP is a request-response protocol.",
+                    "createdAt": "2026-10-15T12:00:00Z",
+                    "sortOrder": 1
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "**Response examples are illustrative** and reflect the source model shape rather than actual recorded traffic.",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/articles/preview/{id}": {
+      "get": {
+        "tags": [
+          "Articles"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Example successful response (illustrative).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetArticlePreviewResponse"
+                },
+                "example": {
+                  "message": "Success",
+                  "status": 200,
+                  "article": {
+                    "id": 3,
+                    "imageUrl": "https://example.org/assets/articles/http.png",
+                    "title": "HTTP Fundamentals",
+                    "description": "Understand HTTP requests and responses.",
+                    "topic": "Web Fundamentals",
+                    "createdAt": "2026-10-15T12:00:00Z"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "**Response examples are illustrative** and reflect the source model shape rather than actual recorded traffic."
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AddArticleRequest": {
+        "required": [
+          "imageUrl",
+          "title",
+          "description",
+          "topic",
+          "markdown",
+          "sortOrder"
+        ],
+        "type": "object",
+        "properties": {
+          "imageUrl": {
+            "type": "string",
+            "format": "uri"
+          },
+          "title": {
+            "maxLength": 200,
+            "pattern": "\\A[a-zA-Z\\dа-яА-ЯёЁ _=+.,!?-]+\\z",
+            "type": "string"
+          },
+          "description": {
+            "maxLength": 1000,
+            "type": "string"
+          },
+          "topic": {
+            "maxLength": 400,
+            "pattern": "\\A[a-zA-Z\\dа-яА-ЯёЁ _=+.,!?-]+\\z",
+            "type": "string"
+          },
+          "markdown": {
+            "type": "string"
+          },
+          "sortOrder": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "EditArticleRequest": {
+        "type": "object",
+        "properties": {
+          "imageUrl": {
+            "type": "string",
+            "format": "uri",
+            "nullable": true
+          },
+          "title": {
+            "maxLength": 200,
+            "pattern": "\\A[a-zA-Z\\dа-яА-ЯёЁ _=+.,!?-]+\\z",
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "maxLength": 1000,
+            "type": "string",
+            "nullable": true
+          },
+          "topic": {
+            "maxLength": 400,
+            "pattern": "\\A[a-zA-Z\\dа-яА-ЯёЁ _=+.,!?-]+\\z",
+            "type": "string",
+            "nullable": true
+          },
+          "markdown": {
+            "type": "string",
+            "nullable": true
+          },
+          "sortOrder": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          }
+        }
+      },
+      "Profile": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "tasksSolved": {
+            "type": "string"
+          },
+          "articlesRead": {
+            "type": "string"
+          },
+          "articlesReadCount": {
+            "type": "integer"
+          },
+          "easyTasksSolvedCount": {
+            "type": "integer"
+          },
+          "mediumTasksSolvedCount": {
+            "type": "integer"
+          },
+          "hardTasksSolvedCount": {
+            "type": "integer"
+          },
+          "isPrivate": {
+            "type": "boolean"
+          },
+          "lastActivity": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "lastTaskSolvedDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "lastTaskSolvedId": {
+            "type": "integer"
+          },
+          "created": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "Article": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "imageUrl": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "topic": {
+            "type": "string"
+          },
+          "markdown": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "sortOrder": {
+            "type": "integer"
+          }
+        }
+      },
+      "ArticlePreview": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "imageUrl": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "topic": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "WebTask": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "topic": {
+            "type": "string"
+          },
+          "file": {
+            "type": "string"
+          },
+          "difficulty": {
+            "type": "string"
+          },
+          "hints": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "solution": {
+            "type": "string"
+          },
+          "created": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "sortOrder": {
+            "type": "integer"
+          }
+        }
+      },
+      "WebTaskPreview": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "topic": {
+            "type": "string"
+          },
+          "difficulty": {
+            "type": "string"
+          },
+          "created": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "PlatformStatistics": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "easyTasksCount": {
+            "type": "integer"
+          },
+          "mediumTasksCount": {
+            "type": "integer"
+          },
+          "hardTasksCount": {
+            "type": "integer"
+          },
+          "articlesCount": {
+            "type": "integer"
+          },
+          "usersCount": {
+            "type": "integer"
+          }
+        }
+      },
+      "FileRecord": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string"
+          }
+        }
+      },
+      "GetProfileResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "profile": {
+            "$ref": "#/components/schemas/Profile"
+          }
+        }
+      },
+      "EditProfileResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "profile": {
+            "$ref": "#/components/schemas/Profile"
+          }
+        }
+      },
+      "ReadArticleResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "GetArticleResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "article": {
+            "$ref": "#/components/schemas/Article"
+          }
+        }
+      },
+      "GetArticlePreviewResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "article": {
+            "$ref": "#/components/schemas/ArticlePreview"
+          }
+        }
+      },
+      "GetArticlesListResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "articles": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ArticlePreview"
+            }
+          }
+        }
+      },
+      "AddArticleResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "article": {
+            "$ref": "#/components/schemas/Article"
+          }
+        }
+      },
+      "EditArticleResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "article": {
+            "$ref": "#/components/schemas/Article"
+          }
+        }
+      },
+      "DeleteArticleResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "article": {
+            "$ref": "#/components/schemas/Article"
+          }
+        }
+      },
+      "GetTaskResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "task": {
+            "$ref": "#/components/schemas/WebTask"
+          }
+        }
+      },
+      "GetTasksListResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "tasks": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WebTaskPreview"
+            }
+          }
+        }
+      },
+      "CreateTaskResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "task": {
+            "$ref": "#/components/schemas/WebTask"
+          }
+        }
+      },
+      "EditTaskResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "task": {
+            "$ref": "#/components/schemas/WebTask"
+          }
+        }
+      },
+      "DeleteTaskResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "task": {
+            "$ref": "#/components/schemas/WebTask"
+          }
+        }
+      },
+      "SolveTaskResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "task": {
+            "$ref": "#/components/schemas/WebTask"
+          }
+        }
+      },
+      "GetStatisticsResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "statistics": {
+            "$ref": "#/components/schemas/PlatformStatistics"
+          }
+        }
+      },
+      "GetFileRecordResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "file": {
+            "$ref": "#/components/schemas/FileRecord"
+          }
+        }
+      },
+      "UploadFileResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "fileRecord": {
+            "$ref": "#/components/schemas/FileRecord"
+          }
+        }
+      },
+      "AuthResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "token": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "BearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "Articles"
+    }
+  ]
+}
