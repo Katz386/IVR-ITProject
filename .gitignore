@@ -10,3 +10,5 @@
 *.bat
 **/tests
 data/
+tasks/
+articles/
